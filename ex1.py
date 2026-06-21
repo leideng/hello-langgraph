@@ -144,34 +144,84 @@ agent = agent_builder.compile()
 
 
 from IPython.display import Image, display
-# Show the agent
+# Show the agent in Jupyter Notebook
 display(Image(agent.get_graph(xray=True).draw_mermaid_png()))
+# Show the agent in terminal
+print("==="*10 + "Agent graph" + "==="*10)
+agent.get_graph(xray=True).print_ascii()
 
 # Invoke
 from langchain.messages import HumanMessage
-messages = [HumanMessage(content="Add 3 and 4.")]
+messages = [HumanMessage(content="Add 32 and 41. And then multiply the result by 2. And then divide the result by 4. Give me step-by-step thinking process.")]
 messages = agent.invoke({"messages": messages})
 for m in messages["messages"]:
     m.pretty_print()
 
 """
 <IPython.core.display.Image object>
+==============================Agent graph==============================
+          +-----------+             
+          | __start__ |             
+          +-----------+             
+                 *                  
+                 *                  
+                 *                  
+           +----------+             
+           | llm_call |             
+           +----------+             
+          ...         ***           
+         .               *          
+       ..                 **        
++---------+           +-----------+ 
+| __end__ |           | tool_node | 
++---------+           +-----------+ 
 ================================ Human Message =================================
 
-Add 3 and 4.
+Add 32 and 41. And then multiply the result by 2. And then divide the result by 4. Give me step-by-step thinking process.
 ================================== Ai Message ==================================
 
-[{'id': 'call_019ee824379d7b9292cc3806', 'input': {'a': 3, 'b': 4}, 'name': 'add', 'type': 'tool_use'}]
+[{'text': "I'll solve this step-by-step using the available tools.\n\n**Step 1: Add 32 and 41**", 'type': 'text'}, {'id': 'call_function_5w2j48s9ivo4_1', 'input': {'a': 32, 'b': 41}, 'name': 'add', 'type': 'tool_use'}]
 Tool Calls:
-  add (call_019ee824379d7b9292cc3806)
- Call ID: call_019ee824379d7b9292cc3806
+  add (call_function_5w2j48s9ivo4_1)
+ Call ID: call_function_5w2j48s9ivo4_1
   Args:
-    a: 3
+    a: 32
+    b: 41
+================================= Tool Message =================================
+
+73
+================================== Ai Message ==================================
+
+[{'text': '32 + 41 = **73**\n\n**Step 2: Multiply the result (73) by 2**', 'type': 'text'}, {'id': 'call_function_vjfo82e1sxsg_1', 'input': {'a': 73, 'b': 2}, 'name': 'multiply', 'type': 'tool_use'}]
+Tool Calls:
+  multiply (call_function_vjfo82e1sxsg_1)
+ Call ID: call_function_vjfo82e1sxsg_1
+  Args:
+    a: 73
+    b: 2
+================================= Tool Message =================================
+
+146
+================================== Ai Message ==================================
+
+[{'text': '73 × 2 = **146**\n\n**Step 3: Divide the result (146) by 4**', 'type': 'text'}, {'id': 'call_function_mthaoornixl5_1', 'input': {'a': 146, 'b': 4}, 'name': 'divide', 'type': 'tool_use'}]
+Tool Calls:
+  divide (call_function_mthaoornixl5_1)
+ Call ID: call_function_mthaoornixl5_1
+  Args:
+    a: 146
     b: 4
 ================================= Tool Message =================================
 
-7
+36.5
 ================================== Ai Message ==================================
 
-3 + 4 = **7**
+146 ÷ 4 = **36.5**
+
+## Summary of the Step-by-Step Process:
+1. **Addition:** 32 + 41 = 73
+2. **Multiplication:** 73 × 2 = 146
+3. **Division:** 146 ÷ 4 = 36.5
+
+**Final Answer: 36.5**
 """
