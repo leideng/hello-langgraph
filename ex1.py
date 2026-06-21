@@ -144,9 +144,9 @@ agent = agent_builder.compile()
 
 
 # Display the agent system
-from IPython.display import Image, display
+#from IPython.display import Image, display
 # Show the agent in Jupyter Notebook
-display(Image(agent.get_graph(xray=True).draw_mermaid_png()))
+#display(Image(agent.get_graph(xray=True).draw_mermaid_png()))
 # Show the agent in terminal
 print("==="*10 + "Agent graph" + "==="*10)
 agent.get_graph(xray=True).print_ascii()
@@ -155,11 +155,12 @@ agent.get_graph(xray=True).print_ascii()
 from pathlib import Path
 
 png = agent.get_graph(xray=True).draw_mermaid_png()
-path = Path("agent_graph.png")
+path = Path("ex1_agent_graph.png")
 path.write_bytes(png)
 print(f"Saved to {path.resolve()}")
-import subprocess
-subprocess.run(["xdg-open", str(path)])
+
+#import subprocess
+#subprocess.run(["xdg-open", str(path)])
 
 # Invoke
 from langchain.messages import HumanMessage
