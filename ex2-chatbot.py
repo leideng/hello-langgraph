@@ -39,3 +39,19 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+"""
+Chatbot ready. Commands: /new (new session), /quit (exit)
+
+You: who are you
+
+Assistant: I'm MiniMax-M3, an AI assistant developed by MiniMax. I'm here to help you with questions, tasks, conversations, and a wide range of topics. How can I assist you today?
+
+You: introdue intel for me; how's current techinque advantages over TSMC
+
+Assistant: # Intel Corporation Overview
+
+**Intel** is one of the world's largest semiconductor companies, founded in 1968 and headquartered in Santa Clara, California. Historically, Intel dominated the CPU market through its x86 architecture and in-house manufacturing (IDM model), but in recent years it has faced intense competition and undergone significant transformation.
+...
+""
